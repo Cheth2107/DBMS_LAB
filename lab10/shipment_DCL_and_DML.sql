@@ -43,19 +43,19 @@ SELECT AVG(order_amount) AS 'Averege Spending'
 FROM order_info;
 
 -- 7>List the order_id and order_date ship_date of all orders shipped from warehouses other than Banglore
-SELECT O.order_id,O.order_date,S.ship_date,W.city
-FROM order_info AS O,shipment AS S,warehouse AS W
-WHERE O.order_id=S.ord_id AND S.whouse_id= W.warehouse_id;
+SELECT O.order_,O.odate,S.ship_date,W.city
+FROM order_ AS O,shipment AS S,warehouse AS W
+WHERE O.order_= S.order_ AND S.warehouse= W.warehouse;
 
 -- 8>Select customer who has not done payment
 SELECT *
 FROM customer
-WHERE customer_id IN(
-		SELECT cust_id
-        FROM order_info
-        WHERE order_id NOT IN(
-			SELECT ord_id
-            FROM shipment
+WHERE cust IN(
+		SELECT cust
+        FROM order_
+        WHERE order_ NOT IN(
+			SELECT order_
+            FROM shipment58
             WHERE payment = 'done'));
             
 
