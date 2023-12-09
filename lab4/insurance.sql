@@ -122,3 +122,19 @@ D05	R05	120	9500
 ALTER TABLE participated
 ADD payment VARCHAR(50);
 
+
+SELECT * FROM person WHERE name LIKE 'J%';
+
+D01	JOHN	hebbal
+D02	JAMES	RK Nagar
+D03	JACK	Vijaynagar
+
+SELECT * FROM person WHERE name LIKE '%O%';
+
+D01	JOHN	hebbal
+D04	ROCK	Jayanagar
+
+SELECT * FROM car WHERE model LIKE 'l%';
+
+R02	limo	2007
+R03	lamborgini	2007
