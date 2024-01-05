@@ -232,3 +232,19 @@ DELIMITER ;
 
 insert into reserves values
 (4,2,"2023-10-01");
+
+
+DELIMITER //
+
+CREATE TRIGGER prevent_boat_delete
+BEFORE DELETE ON Boats
+FOR EACH ROW
+BEGIN
+    IF EXISTS (SELECT 1 FROM Reservations WHERE BoatID = OLD.BoatID AND Status = 'Active') THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Cannot delete a boat with active reservations.';
+    END IF;
+END;
+//
+
+DELIMITER ;
