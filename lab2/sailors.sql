@@ -163,7 +163,7 @@ SELECT * FROM ReservedBoatsWithRatedSailor;
   --8. Trigger that prevents boats from being deleted if they have active reservation
   
 DELIMITER //
-CREATE OR REPLACE TRIGGER CheckAndDelete
+CREATE TRIGGER CheckAndDelete
 BEFORE DELETE ON Boat
 FOR EACH ROW
 BEGIN
