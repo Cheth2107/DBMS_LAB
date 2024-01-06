@@ -75,20 +75,20 @@ INSERT INTO participated VALUES
 ("D444", "KA-21-BD-4728", 54634, 5000),
 ("D222", "KA-09-MA-1234", 65738, 25000);
 
--- Find the total number of people who owned a car that were involved in accidents in 2021
+--1. Find the total number of people who owned a car that were involved in accidents in 2021
 
 select COUNT(driver_id)
 from participated p, accident a
 where p.report_no=a.report_no and a.accident_date like "2021%";
 
--- Find the number of accident in which cars belonging to smith were involved
+--2. Find the number of accident in which cars belonging to smith were involved
 
 select COUNT(distinct a.report_no)
 from accident a
 where exists 
 (select * from person p, participated ptd where p.driver_id=ptd.driver_id and p.driver_name="Smith" and a.report_no=ptd.report_no);
 
--- Add a new accident to the database
+--3. Add a new accident to the database
 
 insert into accident values
 (45562, "2024-04-05", "Mandya");
@@ -96,17 +96,17 @@ insert into accident values
 insert into participated values
 ("D222", "KA-21-BD-4728", 45562, 50000);
 
--- Delete the Mazda belonging to Smith
+--4. Delete the Mazda belonging to Smith
 
 delete from car
 where model="Mazda" and reg_no in
 (select car.reg_no from person p, owns o where p.driver_id=o.driver_id and o.reg_no=car.reg_no and p.driver_name="Smith");
 
--- Update the damage amount for the car with reg_no of KA-09-MA-1234 in the accident with report_no 65738
+--5. Update the damage amount for the car with reg_no of KA-09-MA-1234 in the accident with report_no 65738
 
 update participated set damage_amount=10000 where report_no=65738 and reg_no="KA-09-MA-1234";
 
--- View that shows models and years of car that are involved in accident
+--6. View that shows models and years of car that are involved in accident
 
 create view CarsInAccident as
 select distinct model, c_year
@@ -115,7 +115,7 @@ where c.reg_no=p.reg_no;
 
 select * from CarsInAccident;
 
--- A trigger that prevents a driver from participating in more than 3 accidents in a given year.
+--7. A trigger that prevents a driver from participating in more than 3 accidents in a given year.
 
 DELIMITER //
 create trigger PreventParticipation
@@ -123,7 +123,7 @@ before insert on participated
 for each row
 BEGIN
 	IF 3<=(select count(*) from participated where driver_id=new.driver_id) THEN
-		signal sqlstate '45000' set message_text='Driver has already participated in 2 accidents';
+		signal sqlstate '45000' set message_text='Driver has already participated in 3 accidents';
 	END IF;
 END;//
 DELIMITER ;
