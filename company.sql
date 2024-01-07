@@ -89,36 +89,36 @@ SELECT * FROM Project;
 SELECT * FROM WorksOn;
 
 
--- Make a list of all project numbers for projects that involve an employee whose last name is ‘Scott’, either as a worker or as a manager of the department that controls the project.
+--1. Make a list of all project numbers for projects that involve an employee whose last name is ‘Scott’, either as a worker or as a manager of the department that controls the project.
 
 select p_no,p_name,name from Project p, Employee e where p.d_no=e.d_no and e.name like "%Krishna";
 
 
--- Show the resulting salaries if every employee working on the ‘IoT’ project is given a 10 percent raise
+--2. Show the resulting salaries if every employee working on the ‘IoT’ project is given a 10 percent raise
 select w.ssn,name,salary as old_salary,salary*1.1 as new_salary from WorksOn w join Employee e where w.ssn=e.ssn and w.p_no=(select p_no from Project where p_name="IOT") ;
 
 
--- Find the sum of the salaries of all employees of the ‘Accounts’ department, as well as the maximum salary, the minimum salary, and the average salary in this department
+--3. Find the sum of the salaries of all employees of the ‘Accounts’ department, as well as the maximum salary, the minimum salary, and the average salary in this department
 select sum(salary) as sal_sum, max(salary) as sal_max,min(salary) as sal_min,avg(salary) as sal_avg from Employee e join Department d on e.d_no=d.d_no where d.dname="Accounts";
 
 
--- Retrieve the name of each employee who works on all the projects controlled by department number 1 (use NOT EXISTS operator).
+--4. Retrieve the name of each employee who works on all the projects controlled by department number 1 (use NOT EXISTS operator).
 select Employee.ssn,name,d_no from Employee where not exists
     (select p_no from Project p where p.d_no=1 and p_no not in
     	(select p_no from WorksOn w where w.ssn=Employee.ssn));
 
 
--- For each department that has more than one employees, retrieve the department number and the number of its employees who are making more than Rs. 6,00,000.
+--5. For each department that has more than one employees, retrieve the department number and the number of its employees who are making more than Rs. 6,00,000.
 select d.d_no, count(*) from Department d join Employee e on e.d_no=d.d_no where salary>600000 group by d.d_no having count(*) >1;
 
 
--- Create a view that shows name, dept name and location of all employees
+--6. Create a view that shows name, dept name and location of all employees
 create view emp_details as
 select name,dname,d_loc from Employee e join Department d on e.d_no=d.d_no join DLocation dl on d.d_no=dl.d_no;
 
 select * from emp_details;
 
--- Create a trigger that prevents a project from being deleted if it is currently being worked by any employee.
+--7. Create a trigger that prevents a project from being deleted if it is currently being worked by any employee.
 
 DELIMITER //
 create trigger PreventDelete
