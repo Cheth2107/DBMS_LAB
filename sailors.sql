@@ -134,9 +134,9 @@ CREATE TRIGGER CheckAndDelete
 BEFORE DELETE ON Boat
 FOR EACH ROW
 BEGIN
-    IF EXISTS (SELECT * FROM reserves WHERE reserves.bid = OLD.bid) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Boat is reserved and hence cannot be deleted';
-    END IF;
+IF EXISTS (SELECT * FROM reserves WHERE reserves.bid = OLD.bid) THEN
+SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Boat is reserved and hence cannot be deleted';
+END IF;
 END;
 //
 
