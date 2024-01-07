@@ -80,8 +80,8 @@ Astorm Gowda
 --4. Find the name of the sailors who have reserved all boats
 
 select sname from Sailors s where not exists
-	(select * from Boat b where not exists
-		(select * from reserves r where r.sid=s.sid and b.bid=r.bid));
+(select * from Boat b where not exists
+(select * from reserves r where r.sid=s.sid and b.bid=r.bid));
 
 Albert
 
@@ -98,7 +98,7 @@ from Sailors where age in (select max(age) from Sailors);
 
   --6. For each boat which was reserved by atleast 2 sailors with age >= 40, find the bid and average age of such sailors
 
-  SELECT b.bid, AVG(s.age) AS average_age
+SELECT b.bid, AVG(s.age) AS average_age
 FROM Sailors s, Boat b, reserves r
 WHERE r.sid = s.sid AND r.bid = b.bid AND s.age >= 40
 GROUP BY bid
