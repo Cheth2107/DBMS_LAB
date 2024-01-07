@@ -136,16 +136,16 @@ select * from CoursesOptedByStudent;
 
 --6. Create a trigger that prevents a student from enrolling in a course if the marks pre_requisit is less than the given threshold 
 DELIMITER //
-create or replace trigger PreventEnrollment
+create trigger PreventEnrollment
 before insert on Enroll
 for each row
 BEGIN
-	IF (new.marks<10) THEN
-		signal sqlstate '45000' set message_text='Marks below threshold';
-	END IF;
-END;//
+IF (new.marks<40) THEN
+signal sqlstate '45000' set message_text='Marks below the given value ie 40';
+END IF;
+END;
+//
 
 DELIMITER ;
-
 INSERT INTO Enroll VALUES
-("01HF235", 002, 5, 5); -- Gives error since marks is less than 10
+("01HF235", 002, 5, 35); -- Gives error since marks is less than 10
