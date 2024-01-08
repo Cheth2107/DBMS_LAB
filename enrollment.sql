@@ -85,7 +85,7 @@ select * from TextBook;
 
 --1. Demonstrate how you add a new text book to the database and make this book be adopted by some department.
 insert into TextBook values
-(123456, "ABCDEF", "Pearson", "Chethan");
+(123456, "Sucessful", "Pearson", "Chethan");
 
 insert into BookAdoption values
 (001, 5, 123456);
