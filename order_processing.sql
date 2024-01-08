@@ -139,4 +139,4 @@ select order_id, ship_date
 from Shipments
 where warehouse_id=5;
 
-select * from ShipmentDatesFromWarehouse2;
+select * from ShipmentDatesFromWarehouse5;
